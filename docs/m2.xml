@@ -1,0 +1,10 @@
+<SOAP-ENV:Envelope xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/">
+    <SOAP-ENV:Header>
+        <ns2:TestHead xmlns:ns2="http://www.singham.yuan.com/header" Name="name" Version="version">
+            <ns2:Info DestinationID="DestinationID" RequestID="RequestID" SourceID="SourceID">
+                <ns2:Authentication Password="password" Username="username"/>
+            </ns2:Info>
+        </ns2:TestHead>
+    </SOAP-ENV:Header>
+    <SOAP-ENV:Body/>
+</SOAP-ENV:Envelope>

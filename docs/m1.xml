@@ -1,0 +1,19 @@
+<SOAP-ENV:Envelope xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/">
+    <SOAP-ENV:Header>
+        <TestHead xmlns="http://www.singham.yuan.com/header" Name="Name" Version="Version">
+            <Info RequestID="RequestID" SourceID="SourceID" DestinationID="DestinationID">
+                <Authentication Username="Username" Password="Password"/>
+            </Info>
+        </TestHead>
+    </SOAP-ENV:Header>
+    <SOAP-ENV:Body>
+        <TestBody xmlns="http://www.singham.yuan.com/body" Level="Level">
+            <PersonInfo>
+                <Birthday Date="1900-01-01"/>
+                <City Name="Nanjing"/>
+                <Country Code="CHN"/>
+                <Comment>No Comments</Comment>
+            </PersonInfo>
+        </TestBody>
+    </SOAP-ENV:Body>
+</SOAP-ENV:Envelope>

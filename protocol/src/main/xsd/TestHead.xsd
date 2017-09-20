@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+
+           targetNamespace="http://www.singham.yuan.com/head"
+
+           xmlns="http://www.singham.yuan.com/head"
+
+           elementFormDefault="qualified">
+
+    <xs:element name="TestHead">
+        <xs:complexType>
+
+            <xs:sequence>
+                <xs:element name="Info" type="Info"/>
+            </xs:sequence>
+
+            <xs:attribute name="Name" type="xs:string"/>
+
+            <xs:attribute name="Version" type="xs:string"/>
+
+        </xs:complexType>
+    </xs:element>
+
+    <xs:complexType name="Info">
+        <xs:sequence>
+            <xs:element name="Authentication" type="Authentication"/>
+        </xs:sequence>
+        <xs:attribute name="RequestID" type="xs:string" use="required"/>
+        <xs:attribute name="SourceID" type="xs:string" use="required"/>
+        <xs:attribute name="DestinationID" type="xs:string" use="required"/>
+    </xs:complexType>
+
+    <xs:complexType name="Authentication">
+        <xs:attribute name="Username" type="xs:string" use="required"/>
+        <xs:attribute name="Password" type="xs:string" use="required"/>
+    </xs:complexType>
+
+</xs:schema>

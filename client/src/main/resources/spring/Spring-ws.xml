@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <bean id="namespacePrefixMapperImpl" class="com.singham.yuan.ws.test.common.NamespacePrefixMapperImpl"/>
+
+    <bean id="headerMarshaller" class="org.springframework.oxm.jaxb.Jaxb2Marshaller">
+        <property name="contextPath" value="http://www.singham.yuan.com/head"/>
+        <property name="marshallerProperties">
+            <map>
+                <entry key="jaxb.fragment">
+                    <value type="java.lang.Boolean">true</value>
+                </entry>
+                <entry key="jaxb.formatted.output">
+                    <value type="java.lang.Boolean">true</value>
+                </entry>
+                <entry key="com.sun.xml.internal.bind.namespacePrefixMapper" value-ref="namespacePrefixMapperImpl"/>
+            </map>
+        </property>
+    </bean>
+
+    <bean id="bodyMarshaller" class="org.springframework.oxm.jaxb.Jaxb2Marshaller">
+        <property name="contextPath" value="http://www.singham.yuan.com/body"/>
+        <property name="marshallerProperties">
+            <map>
+                <entry key="jaxb.fragment">
+                    <value type="java.lang.Boolean">true</value>
+                </entry>
+                <entry key="jaxb.formatted.output">
+                    <value type="java.lang.Boolean">true</value>
+                </entry>
+                <entry key="com.sun.xml.internal.bind.namespacePrefixMapper" value-ref="namespacePrefixMapperImpl"/>
+            </map>
+        </property>
+    </bean>
+
+    <bean id="webService" class="org.springframework.ws.client.core.WebServiceTemplate">
+        <property name="marshaller" ref="bodyMarshaller"/>
+        <property name="unmarshaller" ref="bodyMarshaller"/>
+        <property name="interceptors">
+            <list>
+                <ref bean="logInterceptor"/>
+            </list>
+        </property>
+    </bean>
+
+</beans>
