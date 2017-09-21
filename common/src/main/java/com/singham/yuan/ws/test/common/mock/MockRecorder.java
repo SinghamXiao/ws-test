@@ -1,4 +1,4 @@
-package com.singham.yuan.ws.test.common;
+package com.singham.yuan.ws.test.common.mock;
 
 public interface MockRecorder<M> {
 

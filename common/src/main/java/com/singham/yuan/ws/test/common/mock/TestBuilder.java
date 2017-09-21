@@ -1,4 +1,4 @@
-package com.singham.yuan.ws.test.common;
+package com.singham.yuan.ws.test.common.mock;
 
 import org.easymock.EasyMock;
 import org.easymock.IMocksControl;
@@ -59,14 +59,7 @@ public class TestBuilder<T> {
         try {
             Field field = findFieldByClass(target.getClass(), mockComponentClass);
             field.setAccessible(true);
-            if (field.getGenericType().getTypeName().startsWith(List.class.getName())) {
-                if (field.get(target) == null) {
-                    field.set(target, new ArrayList<>());
-                }
-                ((List) field.get(target)).add(mocker);
-            } else {
-                field.set(target, mocker);
-            }
+            setField(mocker, field);
         } catch (Exception e) {
             throw new IllegalArgumentException("Can not find field for class: " + mockComponentClass.getName());
         }
@@ -79,14 +72,7 @@ public class TestBuilder<T> {
         try {
             Field field = findFieldByName(target.getClass(), fieldName);
             field.setAccessible(true);
-            if (field.getGenericType().getTypeName().startsWith(List.class.getName())) {
-                if (field.get(target) == null) {
-                    field.set(target, new ArrayList<>());
-                }
-                ((List) field.get(target)).add(mocker);
-            } else {
-                field.set(target, mocker);
-            }
+            setField(mocker, field);
         } catch (Exception e) {
             throw new IllegalArgumentException("Invalid field name: " + fieldName);
         }
@@ -132,6 +118,17 @@ public class TestBuilder<T> {
         mocksControl.verify();
     }
 
+    private <M> void setField(M mocker, Field field) throws IllegalAccessException {
+        if (field.getGenericType().getTypeName().startsWith(List.class.getName())) {
+            if (field.get(target) == null) {
+                field.set(target, new ArrayList<>());
+            }
+            ((List) field.get(target)).add(mocker);
+        } else {
+            field.set(target, mocker);
+        }
+    }
+
     private <M> Field findFieldByClass(Class clazz, Class<M> mockComponentClass) {
         for (Field field : clazz.getDeclaredFields()) {
             if (field.getGenericType().getTypeName().contains(mockComponentClass.getName())) {
@@ -144,7 +141,7 @@ public class TestBuilder<T> {
         throw new IllegalArgumentException();
     }
 
-    private <M> Field findFieldByName(Class clazz, String fieldName) {
+    private Field findFieldByName(Class clazz, String fieldName) {
         for (Field field : clazz.getDeclaredFields()) {
             if (field.getName().equals(fieldName)) {
                 return field;
