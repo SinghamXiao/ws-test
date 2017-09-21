@@ -15,7 +15,7 @@
                 <entry key="jaxb.formatted.output">
                     <value type="java.lang.Boolean">true</value>
                 </entry>
-                <entry key="com.sun.xml.internal.bind.namespacePrefixMapper" value-ref="namespacePrefixMapperImpl"/>
+                <entry key="com.sun.xml.bind.namespacePrefixMapper" value-ref="namespacePrefixMapperImpl"/>
             </map>
         </property>
     </bean>
@@ -30,7 +30,7 @@
                 <entry key="jaxb.formatted.output">
                     <value type="java.lang.Boolean">true</value>
                 </entry>
-                <entry key="com.sun.xml.internal.bind.namespacePrefixMapper" value-ref="namespacePrefixMapperImpl"/>
+                <entry key="com.sun.xml.bind.namespacePrefixMapper" value-ref="namespacePrefixMapperImpl"/>
             </map>
         </property>
     </bean>

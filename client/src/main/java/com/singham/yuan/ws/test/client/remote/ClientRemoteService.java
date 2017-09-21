@@ -45,23 +45,6 @@ public class ClientRemoteService {
         WebServiceMessageCallback requestCallback = message -> {
             SoapMessage soapMessage = (SoapMessage) message;
 
-            Map<String, Object> properties = new HashMap<>();
-            properties.put(Marshaller.JAXB_FORMATTED_OUTPUT, Boolean.TRUE);
-            properties.put(Marshaller.JAXB_FRAGMENT, Boolean.TRUE);
-
-            NamespacePrefixMapper mapper = new NamespacePrefixMapper() {
-                public String getPreferredPrefix(String namespaceUri, String suggestion, boolean requirePrefix) {
-                    if ("http://www.singham.yuan.com/head".equals(namespaceUri) && !requirePrefix)
-                        return "";
-                    if ("http://www.singham.yuan.com/body".equals(namespaceUri) && !requirePrefix)
-                        return "";
-                    return "ns";
-                }
-            };
-            properties.put("com.sun.xml.bind.namespacePrefixMapper", mapper);
-            headerMarshaller.setMarshallerProperties(properties);
-            bodyMarshaller.setMarshallerProperties(properties);
-
             headerMarshaller.marshal(testHead, soapMessage.getSoapHeader().getResult());
             bodyMarshaller.marshal(testBody, soapMessage.getSoapBody().getPayloadResult());
 

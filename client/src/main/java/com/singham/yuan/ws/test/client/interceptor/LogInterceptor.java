@@ -1,5 +1,7 @@
 package com.singham.yuan.ws.test.client.interceptor;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 import org.springframework.ws.client.WebServiceClientException;
 import org.springframework.ws.client.support.interceptor.ClientInterceptor;
@@ -13,12 +15,16 @@ import javax.xml.transform.TransformerConfigurationException;
 import javax.xml.transform.stream.StreamResult;
 import java.io.StringWriter;
 
+
 @Component
 public class LogInterceptor extends SoapEnvelopeLoggingInterceptor implements ClientInterceptor {
+
+    private static final Logger LOGGER = LoggerFactory.getLogger(LogInterceptor.class);
 
     @Override
     public boolean handleRequest(MessageContext messageContext) throws WebServiceClientException {
         String message = getMessageContent(getSource(messageContext.getRequest()));
+        LOGGER.info("Request: " + message);
         System.out.println("Request: " + message);
         return false;
     }
