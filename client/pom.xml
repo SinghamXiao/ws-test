@@ -83,7 +83,7 @@
                         <contextPath>/client</contextPath>
                     </webAppConfig>
                     <httpConnector>
-                        <port>8182</port>
+                        <port>8181</port>
                     </httpConnector>
                 </configuration>
             </plugin>
