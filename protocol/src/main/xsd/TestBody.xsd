@@ -12,7 +12,8 @@
         <xs:complexType>
 
             <xs:sequence>
-                <xs:element name="PersonInfo" type="PersonInfo"/>
+                <xs:element name="PersonInfo" type="PersonInfo" minOccurs="0"/>
+                <xs:element name="Error" type="Error" minOccurs="0"/>
             </xs:sequence>
 
             <xs:attribute name="Level" type="xs:string"/>
@@ -26,6 +27,12 @@
             <xs:element name="Birthday" type="xs:string"/>
             <xs:element name="City" type="xs:string"/>
             <xs:element name="Country" type="xs:string"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="Error">
+        <xs:sequence>
+            <xs:element name="Detail" type="xs:string"/>
         </xs:sequence>
     </xs:complexType>
 

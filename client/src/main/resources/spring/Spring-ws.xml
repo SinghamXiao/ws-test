@@ -35,7 +35,11 @@
         </property>
     </bean>
 
-    <bean id="webService" class="org.springframework.ws.client.core.WebServiceTemplate">
+    <bean id="faultMarshaller" class="org.springframework.oxm.jaxb.Jaxb2Marshaller">
+        <property name="contextPath" value="org.xmlsoap.schemas.soap.envelope"/>
+    </bean>
+
+    <bean id="webServiceTemplate" class="org.springframework.ws.client.core.WebServiceTemplate">
         <property name="marshaller" ref="bodyMarshaller"/>
         <property name="unmarshaller" ref="bodyMarshaller"/>
         <property name="interceptors">
