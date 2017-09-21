@@ -5,7 +5,6 @@ import org.springframework.ws.client.WebServiceClientException;
 import org.springframework.ws.client.support.interceptor.ClientInterceptor;
 import org.springframework.ws.context.MessageContext;
 import org.springframework.ws.soap.SoapMessage;
-import org.springframework.ws.soap.server.endpoint.interceptor.SoapEnvelopeLoggingInterceptor;
 import org.w3c.dom.Element;
 import org.w3c.dom.NamedNodeMap;
 import org.w3c.dom.Node;
@@ -17,11 +16,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Component
-public class RequestInterceptor extends SoapEnvelopeLoggingInterceptor implements ClientInterceptor {
+public class RequestInterceptor implements ClientInterceptor {
 
     @Override
     public boolean handleRequest(MessageContext messageContext) throws WebServiceClientException {
-
         final SoapMessage request = (SoapMessage) messageContext.getRequest();
         DOMResult domResult = (DOMResult) request.getSoapHeader().getResult();
         Node domResultNode = domResult.getNode();

@@ -2,9 +2,9 @@
 
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
 
-           targetNamespace="http://www.singham.yuan.com/head"
+           targetNamespace="http://www.yuan.singham.com/head"
 
-           xmlns="http://www.singham.yuan.com/head"
+           xmlns="http://www.yuan.singham.com/head"
 
            elementFormDefault="qualified">
 

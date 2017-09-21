@@ -1,8 +1,8 @@
-package com.singham.yuan.ws.test.client.MsgFactory;
+package com.singham.yuan.ws.test.client.factory;
 
-import com.yuan.singham.header.Authentication;
-import com.yuan.singham.header.Info;
-import com.yuan.singham.header.TestHead;
+import com.singham.yuan.head.Authentication;
+import com.singham.yuan.head.Info;
+import com.singham.yuan.head.TestHead;
 
 public class TestHeadFactory {
 

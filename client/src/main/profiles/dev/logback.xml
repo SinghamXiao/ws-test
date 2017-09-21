@@ -1,0 +1,43 @@
+<configuration debug="false" scan="false">
+
+    <property resource="logback.properties"/>
+
+    <appender name="ROOT_APPENDER" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>/home/singhamxiao/logs/${appName}.log</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>/home/singhamxiao/logs/${appName}.%d{yyyy-MM-dd}.log.zip
+            </fileNamePattern>
+            <timeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+                <maxFileSize>512000KB</maxFileSize>
+            </timeBasedFileNamingAndTriggeringPolicy>
+        </rollingPolicy>
+        <encoder>
+            <pattern>%d{yyyy-MM-dd'T'HH:mm:ss.SSS,GMT} %m%n</pattern>
+        </encoder>
+    </appender>
+
+    <appender name="PERF_FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>/home/singhamxiao/logs/${appName}.perf.log</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>/home/singhamxiao/logs/${appName}.perf.%d{yyyy-MM-dd}.log.zip
+            </fileNamePattern>
+            <timeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+                <maxFileSize>512000KB</maxFileSize>
+            </timeBasedFileNamingAndTriggeringPolicy>
+        </rollingPolicy>
+        <encoder>
+            <pattern>%d{yyyy-MM-dd'T'HH:mm:ss.SSS,GMT} %m%n</pattern>
+        </encoder>
+    </appender>
+
+    <root level="INFO">
+        <appender-ref ref="ROOT_APPENDER"/>
+    </root>
+
+    <logger name="PERF_LOGGER" level="INFO" additivity="false">
+        <appender-ref ref="PERF_FILE"/>
+    </logger>
+
+    <logger name="com.singham.yuan" level="INFO"/>
+
+</configuration>

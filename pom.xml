@@ -3,14 +3,13 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
-	
+
     <groupId>com.singham.yuan.ws.test</groupId>
     <artifactId>ws-test</artifactId>
     <packaging>pom</packaging>
     <version>1.0.0</version>
 
-	<modules>
-        <module>protocol</module>
+    <modules>
         <module>client</module>
         <module>server</module>
         <module>protocol</module>
@@ -59,7 +58,7 @@
                     <scanIntervalSeconds>0</scanIntervalSeconds>
 
                     <webAppConfig>
-                        <contextPath>/ws-client</contextPath>
+                        <contextPath>/ws-test</contextPath>
                     </webAppConfig>
                     <httpConnector>
                         <port>8182</port>
@@ -153,7 +152,7 @@
         <dependency>
             <groupId>org.easymock</groupId>
             <artifactId>easymock</artifactId>
-            <version>3.3.1</version>
+            <version>3.4</version>
             <scope>test</scope>
         </dependency>
         <dependency>
@@ -196,6 +195,7 @@
             <version>${spring.version}</version>
             <scope>test</scope>
         </dependency>
+
     </dependencies>
 
 </project>

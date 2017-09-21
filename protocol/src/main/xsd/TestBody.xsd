@@ -2,9 +2,9 @@
 
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
 
-           targetNamespace="http://www.singham.yuan.com/body"
+           targetNamespace="http://www.yuan.singham.com/body"
 
-           xmlns="http://www.singham.yuan.com/body"
+           xmlns="http://www.yuan.singham.com/body"
 
            elementFormDefault="qualified">
 
@@ -23,22 +23,10 @@
     <xs:complexType name="PersonInfo">
         <xs:sequence>
             <xs:element name="Comment" type="xs:string"/>
-            <xs:element name="Birthday" type="Birthday"/>
-            <xs:element name="City" type="City"/>
-            <xs:element name="Country" type="Country"/>
+            <xs:element name="Birthday" type="xs:string"/>
+            <xs:element name="City" type="xs:string"/>
+            <xs:element name="Country" type="xs:string"/>
         </xs:sequence>
-    </xs:complexType>
-
-    <xs:complexType name="Birthday">
-        <xs:attribute name="Date" type="xs:date"/>
-    </xs:complexType>
-
-    <xs:complexType name="City">
-        <xs:attribute name="Name" type="xs:string"/>
-    </xs:complexType>
-
-    <xs:complexType name="Country">
-        <xs:attribute name="Code" type="xs:string"/>
     </xs:complexType>
 
 </xs:schema>
