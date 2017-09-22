@@ -3,8 +3,8 @@ package com.singham.yuan.ws.test.client.remote;
 import com.singham.yuan.body.Error;
 import com.singham.yuan.body.TestBody;
 import com.singham.yuan.head.TestHead;
-import com.singham.yuan.ws.test.client.factory.TestBodyFactory;
-import com.singham.yuan.ws.test.client.factory.TestHeadFactory;
+import com.singham.yuan.ws.test.common.factory.TestBodyFactory;
+import com.singham.yuan.ws.test.common.factory.TestHeadFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,8 +33,8 @@ public class ClientRemoteService {
     private WebServiceTemplate webServiceTemplate;
 
     @Autowired
-    @Qualifier("headerMarshaller")
-    private Jaxb2Marshaller headerMarshaller;
+    @Qualifier("headMarshaller")
+    private Jaxb2Marshaller headMarshaller;
 
     @Autowired
     @Qualifier("bodyMarshaller")
@@ -52,7 +52,7 @@ public class ClientRemoteService {
 
         WebServiceMessageCallback requestCallback = message -> {
             SoapMessage soapMessage = (SoapMessage) message;
-            headerMarshaller.marshal(testHead, soapMessage.getSoapHeader().getResult());
+            headMarshaller.marshal(testHead, soapMessage.getSoapHeader().getResult());
             bodyMarshaller.marshal(testBody, soapMessage.getSoapBody().getPayloadResult());
         };
 
@@ -74,7 +74,11 @@ public class ClientRemoteService {
             return rs;
         };
 
-        webServiceTemplate.sendAndReceive(remoteUrl, requestCallback, responseExtractor);
+        try {
+            webServiceTemplate.sendAndReceive(remoteUrl, requestCallback, responseExtractor);
+        } catch (Exception e) {
+            LOGGER.error(e.getMessage(), e);
+        }
     }
 
 }

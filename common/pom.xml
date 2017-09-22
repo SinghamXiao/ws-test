@@ -12,10 +12,11 @@
     <artifactId>common</artifactId>
 
     <dependencies>
+
         <dependency>
-            <groupId>org.easymock</groupId>
-            <artifactId>easymock</artifactId>
-            <version>3.4</version>
+            <groupId>com.singham.yuan.ws.test</groupId>
+            <artifactId>protocol</artifactId>
+            <version>1.0.0</version>
         </dependency>
 
         <dependency>

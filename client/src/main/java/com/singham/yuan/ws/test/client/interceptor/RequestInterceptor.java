@@ -37,7 +37,7 @@ public class RequestInterceptor implements ClientInterceptor {
             removeNsPrefix(((DOMSource) request.getSoapBody().getPayloadSource()).getNode().getAttributes());
         }
 
-        return false;
+        return true;
     }
 
     @Override

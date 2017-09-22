@@ -26,7 +26,7 @@ public class LogInterceptor extends SoapEnvelopeLoggingInterceptor implements Cl
         String message = getMessageContent(getSource(messageContext.getRequest()));
         LOGGER.info("Request: " + message);
         System.out.println("Request: " + message);
-        return false;
+        return true;
     }
 
     @Override

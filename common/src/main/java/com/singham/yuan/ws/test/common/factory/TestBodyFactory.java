@@ -1,5 +1,4 @@
-package com.singham.yuan.ws.test.client.factory;
-
+package com.singham.yuan.ws.test.common.factory;
 
 import com.singham.yuan.body.PersonInfo;
 import com.singham.yuan.body.TestBody;

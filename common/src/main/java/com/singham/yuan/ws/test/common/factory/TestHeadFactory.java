@@ -1,4 +1,4 @@
-package com.singham.yuan.ws.test.client.factory;
+package com.singham.yuan.ws.test.common.factory;
 
 import com.singham.yuan.head.Authentication;
 import com.singham.yuan.head.Info;
