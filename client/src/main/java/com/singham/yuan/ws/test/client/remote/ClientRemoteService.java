@@ -77,7 +77,7 @@ public class ClientRemoteService {
         try {
             webServiceTemplate.sendAndReceive(remoteUrl, requestCallback, responseExtractor);
         } catch (Exception e) {
-            LOGGER.error(e.getMessage(), e);
+            LOGGER.error(e.getMessage());
         }
     }
 

@@ -1,0 +1,53 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:sws="http://www.springframework.org/schema/web-services"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+      http://www.springframework.org/schema/beans/spring-beans-3.1.xsd
+      http://www.springframework.org/schema/web-services
+      http://www.springframework.org/schema/web-services/web-services-2.0.xsd">
+
+    <sws:annotation-driven/>
+
+    <bean id="serverNamespacePrefixMapperImpl" class="com.singham.yuan.ws.test.common.xml.NamespacePrefixMapperImpl"/>
+
+    <bean id="headMarshaller" class="org.springframework.oxm.jaxb.Jaxb2Marshaller">
+        <property name="contextPath" value="com.singham.yuan.head"/>
+        <property name="marshallerProperties">
+            <map>
+                <entry key="jaxb.fragment">
+                    <value type="java.lang.Boolean">true</value>
+                </entry>
+                <entry key="jaxb.formatted.output">
+                    <value type="java.lang.Boolean">true</value>
+                </entry>
+                <entry key="com.sun.xml.bind.namespacePrefixMapper" value-ref="serverNamespacePrefixMapperImpl"/>
+            </map>
+        </property>
+    </bean>
+
+    <bean id="bodyMarshaller" class="org.springframework.oxm.jaxb.Jaxb2Marshaller">
+        <property name="contextPath" value="com.singham.yuan.body"/>
+        <property name="marshallerProperties">
+            <map>
+                <entry key="jaxb.fragment">
+                    <value type="java.lang.Boolean">true</value>
+                </entry>
+                <entry key="jaxb.formatted.output">
+                    <value type="java.lang.Boolean">true</value>
+                </entry>
+                <entry key="com.sun.xml.bind.namespacePrefixMapper" value-ref="serverNamespacePrefixMapperImpl"/>
+            </map>
+        </property>
+    </bean>
+
+    <bean id="faultMarshaller" class="org.springframework.oxm.jaxb.Jaxb2Marshaller">
+        <property name="contextPath" value="org.xmlsoap.schemas.soap.envelope"/>
+    </bean>
+<!--
+    <sws:interceptors>
+        <ref bean="logInterceptor"/>
+        <ref bean="requestInterceptor"/>
+        <ref bean="responseInterceptor"/>
+    </sws:interceptors>-->
+
+</beans>
