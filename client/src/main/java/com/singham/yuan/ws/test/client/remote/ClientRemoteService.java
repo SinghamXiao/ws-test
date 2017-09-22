@@ -33,15 +33,15 @@ public class ClientRemoteService {
     private WebServiceTemplate webServiceTemplate;
 
     @Autowired
-    @Qualifier("headMarshaller")
+    @Qualifier("clientHeadMarshaller")
     private Jaxb2Marshaller headMarshaller;
 
     @Autowired
-    @Qualifier("bodyMarshaller")
+    @Qualifier("clientBodyMarshaller")
     private Jaxb2Marshaller bodyMarshaller;
 
     @Autowired
-    @Qualifier("faultMarshaller")
+    @Qualifier("clientFaultMarshaller")
     private Jaxb2Marshaller faultMarshaller;
 
     public void execute() {

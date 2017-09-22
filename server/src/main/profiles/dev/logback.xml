@@ -45,9 +45,6 @@
         <appender-ref ref="PERF_FILE"/>
     </logger>
 
-    <logger name="com.singham.yuan" level="INFO">
-        <appender-ref ref="CONSOLE"/>
-        <appender-ref ref="ROOT_APPENDER"/>
-    </logger>
+    <logger name="com.singham.yuan" level="INFO"/>
 
 </configuration>

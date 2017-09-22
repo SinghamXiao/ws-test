@@ -11,7 +11,7 @@
 
     <artifactId>server</artifactId>
     <packaging>war</packaging>
-    
+
     <profiles>
         <profile>
             <id>dev</id>

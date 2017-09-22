@@ -13,8 +13,7 @@ public class ServerRemoteService {
 
     @PayloadRoot(namespace = NAMESPACE_URI, localPart = "TestBody")
     @ResponsePayload
-    public void execute(@RequestPayload TestBody request) {
-
-        System.out.println("test");
+    public TestBody execute(@RequestPayload TestBody request) {
+        return request;
     }
 }

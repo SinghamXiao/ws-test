@@ -1,7 +1,6 @@
 package com.singham.yuan.ws.test.common.xml;
 
 import com.sun.xml.bind.marshaller.NamespacePrefixMapper;
-import org.springframework.stereotype.Component;
 
 public class NamespacePrefixMapperImpl extends NamespacePrefixMapper {
 

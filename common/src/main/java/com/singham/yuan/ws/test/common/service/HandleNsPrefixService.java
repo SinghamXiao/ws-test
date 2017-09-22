@@ -1,8 +1,5 @@
-package com.singham.yuan.ws.test.client.interceptor;
+package com.singham.yuan.ws.test.common.service;
 
-import org.springframework.stereotype.Component;
-import org.springframework.ws.client.WebServiceClientException;
-import org.springframework.ws.client.support.interceptor.ClientInterceptor;
 import org.springframework.ws.context.MessageContext;
 import org.springframework.ws.soap.SoapMessage;
 import org.w3c.dom.Element;
@@ -15,19 +12,14 @@ import javax.xml.transform.dom.DOMSource;
 import java.util.ArrayList;
 import java.util.List;
 
-@Component
-public class ResponseInterceptor implements ClientInterceptor {
+public class HandleNsPrefixService {
 
-    @Override
-    public boolean handleRequest(MessageContext messageContext) throws WebServiceClientException {
-        return true;
-    }
+    private static final String XMLNS = "xmlns:";
 
-    @Override
-    public boolean handleResponse(MessageContext messageContext) throws WebServiceClientException {
-        final SoapMessage response = (SoapMessage) messageContext.getRequest();
-        DOMResult domResult = (DOMResult) response.getSoapHeader().getResult();
-        Node domResultNode = domResult.getNode();
+    public void handleNsPrefix(MessageContext messageContext) {
+        final SoapMessage request = (SoapMessage) messageContext.getRequest();
+
+        Node domResultNode = ((DOMResult) request.getSoapHeader().getResult()).getNode();
 
         NodeList childNodes = domResultNode.getChildNodes();
         removeNsPrefix(childNodes);
@@ -37,34 +29,26 @@ public class ResponseInterceptor implements ClientInterceptor {
             removeNsPrefix(firstChild.getAttributes());
         }
 
-        removeNsPrefix(((DOMSource) response.getSoapBody().getPayloadSource()).getNode());
-        if (((DOMSource) response.getSoapBody().getPayloadSource()).getNode() != null) {
-            removeNsPrefix(((DOMSource) response.getSoapBody().getPayloadSource()).getNode().getAttributes());
+        Node node = ((DOMSource) request.getSoapBody().getPayloadSource()).getNode();
+        removeNsPrefix(node);
+        if (node != null) {
+            removeNsPrefix(node.getAttributes());
         }
-        return true;
-    }
-
-    @Override
-    public boolean handleFault(MessageContext messageContext) throws WebServiceClientException {
-        return true;
-    }
-
-    @Override
-    public void afterCompletion(MessageContext messageContext, Exception ex) throws WebServiceClientException {
-
     }
 
     private void removeNsPrefix(NamedNodeMap attributes) {
         if (attributes == null) {
             return;
         }
+
         final List<String> removeNodeNames = new ArrayList<>();
         for (int i = 0; i < attributes.getLength(); i++) {
             final String nodeName = attributes.item(i).getNodeName();
-            if (nodeName.startsWith("xmlns:")) {
+            if (nodeName.startsWith(XMLNS)) {
                 removeNodeNames.add(nodeName);
             }
         }
+
         removeNodeNames.forEach(attributes::removeNamedItem);
     }
 
@@ -78,9 +62,11 @@ public class ResponseInterceptor implements ClientInterceptor {
         if (node == null) {
             return;
         }
+
         if (node instanceof Element) {
             node.setPrefix(null);
             removeNsPrefix(node.getChildNodes());
         }
     }
+
 }

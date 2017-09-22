@@ -5,7 +5,7 @@
 
     <bean id="clientNamespacePrefixMapperImpl" class="com.singham.yuan.ws.test.common.xml.NamespacePrefixMapperImpl"/>
 
-    <bean id="headMarshaller" class="org.springframework.oxm.jaxb.Jaxb2Marshaller">
+    <bean id="clientHeadMarshaller" class="org.springframework.oxm.jaxb.Jaxb2Marshaller">
         <property name="contextPath" value="com.singham.yuan.head"/>
         <property name="marshallerProperties">
             <map>
@@ -20,7 +20,7 @@
         </property>
     </bean>
 
-    <bean id="bodyMarshaller" class="org.springframework.oxm.jaxb.Jaxb2Marshaller">
+    <bean id="clientBodyMarshaller" class="org.springframework.oxm.jaxb.Jaxb2Marshaller">
         <property name="contextPath" value="com.singham.yuan.body"/>
         <property name="marshallerProperties">
             <map>
@@ -35,16 +35,20 @@
         </property>
     </bean>
 
-    <bean id="faultMarshaller" class="org.springframework.oxm.jaxb.Jaxb2Marshaller">
+    <bean id="clientFaultMarshaller" class="org.springframework.oxm.jaxb.Jaxb2Marshaller">
         <property name="contextPath" value="org.xmlsoap.schemas.soap.envelope"/>
     </bean>
 
+    <bean id="clientHandleNsPrefixService" class="com.singham.yuan.ws.test.common.service.HandleNsPrefixService"/>
+
+    <bean id="clientTransformMessageService" class="com.singham.yuan.ws.test.common.service.TransformMessageService"/>
+
     <bean id="webServiceTemplate" class="org.springframework.ws.client.core.WebServiceTemplate">
-        <property name="marshaller" ref="bodyMarshaller"/>
-        <property name="unmarshaller" ref="bodyMarshaller"/>
+        <property name="marshaller" ref="clientBodyMarshaller"/>
+        <property name="unmarshaller" ref="clientBodyMarshaller"/>
         <property name="interceptors">
             <list>
-                <ref bean="logInterceptor"/>
+                <ref bean="logClientInterceptor"/>
             </list>
         </property>
     </bean>

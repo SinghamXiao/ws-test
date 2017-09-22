@@ -3,7 +3,7 @@
 //import com.singham.yuan.head.Authentication;
 //import com.singham.yuan.head.Info;
 //import com.singham.yuan.head.TestHead;
-//import com.singham.yuan.ws.test.client.interceptor.LogInterceptor;
+//import com.singham.yuan.ws.test.client.interceptor.LogClientInterceptor;
 //import com.sun.xml.internal.bind.marshaller.NamespacePrefixMapper;
 //import org.junit.Test;
 //import org.springframework.oxm.jaxb.Jaxb2Marshaller;
@@ -25,7 +25,7 @@
 //    public static void main(String[] args) throws JAXBException {
 //
 //        WebServiceTemplate webServiceTemplate = new WebServiceTemplate();
-//        webServiceTemplate.setInterceptors(new ClientInterceptor[]{new LogInterceptor()});
+//        webServiceTemplate.setInterceptors(new ClientInterceptor[]{new LogClientInterceptor()});
 //
 //        Jaxb2Marshaller headerMarshaller = new Jaxb2Marshaller();
 //        headerMarshaller.setClassesToBeBound(TestHead.class);

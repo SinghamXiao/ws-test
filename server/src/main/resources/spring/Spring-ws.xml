@@ -10,7 +10,7 @@
 
     <bean id="serverNamespacePrefixMapperImpl" class="com.singham.yuan.ws.test.common.xml.NamespacePrefixMapperImpl"/>
 
-    <bean id="headMarshaller" class="org.springframework.oxm.jaxb.Jaxb2Marshaller">
+    <bean id="serverHeadMarshaller" class="org.springframework.oxm.jaxb.Jaxb2Marshaller">
         <property name="contextPath" value="com.singham.yuan.head"/>
         <property name="marshallerProperties">
             <map>
@@ -25,7 +25,7 @@
         </property>
     </bean>
 
-    <bean id="bodyMarshaller" class="org.springframework.oxm.jaxb.Jaxb2Marshaller">
+    <bean id="serverBodyMarshaller" class="org.springframework.oxm.jaxb.Jaxb2Marshaller">
         <property name="contextPath" value="com.singham.yuan.body"/>
         <property name="marshallerProperties">
             <map>
@@ -40,14 +40,15 @@
         </property>
     </bean>
 
-    <bean id="faultMarshaller" class="org.springframework.oxm.jaxb.Jaxb2Marshaller">
+    <bean id="serverFaultMarshaller" class="org.springframework.oxm.jaxb.Jaxb2Marshaller">
         <property name="contextPath" value="org.xmlsoap.schemas.soap.envelope"/>
     </bean>
-<!--
+
+    <bean id="serverTransformMessageService" class="com.singham.yuan.ws.test.common.service.TransformMessageService"/>
+
     <sws:interceptors>
-        <ref bean="logInterceptor"/>
-        <ref bean="requestInterceptor"/>
-        <ref bean="responseInterceptor"/>
-    </sws:interceptors>-->
+        <ref bean="logEndPointInterceptor"/>
+        <ref bean="handleEndPointInterceptor"/>
+    </sws:interceptors>
 
 </beans>
