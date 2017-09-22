@@ -44,6 +44,7 @@
         <property name="contextPath" value="org.xmlsoap.schemas.soap.envelope"/>
     </bean>
 
+    <bean id="serverHandleNsPrefixService" class="com.singham.yuan.ws.test.common.service.HandleNsPrefixService"/>
     <bean id="serverTransformMessageService" class="com.singham.yuan.ws.test.common.service.TransformMessageService"/>
 
     <sws:interceptors>

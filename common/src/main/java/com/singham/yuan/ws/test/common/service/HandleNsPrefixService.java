@@ -1,6 +1,5 @@
 package com.singham.yuan.ws.test.common.service;
 
-import org.springframework.ws.context.MessageContext;
 import org.springframework.ws.soap.SoapMessage;
 import org.w3c.dom.Element;
 import org.w3c.dom.NamedNodeMap;
@@ -16,10 +15,8 @@ public class HandleNsPrefixService {
 
     private static final String XMLNS = "xmlns:";
 
-    public void handleNsPrefix(MessageContext messageContext) {
-        final SoapMessage request = (SoapMessage) messageContext.getRequest();
-
-        Node domResultNode = ((DOMResult) request.getSoapHeader().getResult()).getNode();
+    public void handleNsPrefix(SoapMessage soapMessage) {
+        Node domResultNode = ((DOMResult) soapMessage.getSoapHeader().getResult()).getNode();
 
         NodeList childNodes = domResultNode.getChildNodes();
         removeNsPrefix(childNodes);
@@ -29,7 +26,7 @@ public class HandleNsPrefixService {
             removeNsPrefix(firstChild.getAttributes());
         }
 
-        Node node = ((DOMSource) request.getSoapBody().getPayloadSource()).getNode();
+        Node node = ((DOMSource) soapMessage.getSoapBody().getPayloadSource()).getNode();
         removeNsPrefix(node);
         if (node != null) {
             removeNsPrefix(node.getAttributes());

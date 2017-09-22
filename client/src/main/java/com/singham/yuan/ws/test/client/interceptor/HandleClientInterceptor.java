@@ -7,6 +7,8 @@ import org.springframework.stereotype.Component;
 import org.springframework.ws.client.WebServiceClientException;
 import org.springframework.ws.client.support.interceptor.ClientInterceptor;
 import org.springframework.ws.context.MessageContext;
+import org.springframework.ws.soap.SoapMessage;
+
 
 @Component
 public class HandleClientInterceptor implements ClientInterceptor {
@@ -17,13 +19,15 @@ public class HandleClientInterceptor implements ClientInterceptor {
 
     @Override
     public boolean handleRequest(MessageContext messageContext) throws WebServiceClientException {
-        handleNsPrefixService.handleNsPrefix(messageContext);
+        SoapMessage soapMessage = (SoapMessage) messageContext.getRequest();
+        handleNsPrefixService.handleNsPrefix(soapMessage);
         return true;
     }
 
     @Override
     public boolean handleResponse(MessageContext messageContext) throws WebServiceClientException {
-        handleNsPrefixService.handleNsPrefix(messageContext);
+        SoapMessage soapMessage = (SoapMessage) messageContext.getResponse();
+        handleNsPrefixService.handleNsPrefix(soapMessage);
         return true;
     }
 
