@@ -9,7 +9,6 @@ import org.springframework.ws.client.support.interceptor.ClientInterceptor;
 import org.springframework.ws.context.MessageContext;
 import org.springframework.ws.soap.SoapMessage;
 
-
 @Component
 public class HandleClientInterceptor implements ClientInterceptor {
 

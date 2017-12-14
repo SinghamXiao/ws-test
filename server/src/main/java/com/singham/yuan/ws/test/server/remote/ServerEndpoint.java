@@ -7,7 +7,7 @@ import org.springframework.ws.server.endpoint.annotation.RequestPayload;
 import org.springframework.ws.server.endpoint.annotation.ResponsePayload;
 
 @Endpoint
-public class ServerRemoteService {
+public class ServerEndpoint {
 
     private static final String NAMESPACE_URI = "http://www.yuan.singham.com/body";
 
