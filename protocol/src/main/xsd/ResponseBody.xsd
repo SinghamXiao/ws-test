@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+
+           targetNamespace="http://www.yuan.singham.com/body"
+
+           xmlns="http://www.yuan.singham.com/body"
+
+           elementFormDefault="qualified">
+
+    <xs:element name="ResponseBody">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="Error" type="ErrorInfo" minOccurs="0"/>
+                <xs:element name="ResponseInfo" type="ResponseInfo" minOccurs="0"/>
+            </xs:sequence>
+            <xs:attribute name="Level" type="xs:string"/>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:complexType name="ResponseInfo">
+        <xs:sequence>
+            <xs:element name="Name" type="xs:string"/>
+            <xs:element name="Age" type="xs:int"/>
+            <xs:element name="Birthday" type="xs:string"/>
+            <xs:element name="City" type="xs:string"/>
+            <xs:element name="Country" type="xs:string"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="ErrorInfo">
+        <xs:sequence>
+            <xs:element name="Message" type="xs:string"/>
+        </xs:sequence>
+    </xs:complexType>
+
+</xs:schema>
