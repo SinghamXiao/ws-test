@@ -16,10 +16,14 @@ import org.springframework.stereotype.Service;
 import org.springframework.ws.client.core.WebServiceMessageCallback;
 import org.springframework.ws.client.core.WebServiceMessageExtractor;
 import org.springframework.ws.client.core.WebServiceTemplate;
+import org.springframework.ws.soap.SoapHeader;
 import org.springframework.ws.soap.SoapMessage;
+import org.springframework.xml.transform.StringSource;
 import org.xmlsoap.schemas.soap.envelope.Fault;
 
 import javax.xml.bind.JAXBElement;
+import javax.xml.transform.Transformer;
+import javax.xml.transform.TransformerFactory;
 
 @Service
 public class ClientRemoteService {
@@ -105,8 +109,32 @@ public class ClientRemoteService {
 
             return rs;
         };
+
         try {
             webServiceTemplate.sendAndReceive(remoteUrl, requestCallback2, responseExtractor2);
+        } catch (Exception e) {
+            LOGGER.error(e.getMessage());
+        }
+
+
+        WebServiceMessageCallback requestCallback3 = message -> {
+            SoapMessage soapMessage = (SoapMessage) message;
+            SoapHeader soapHeader = ((SoapMessage) message).getSoapHeader();
+
+            String requestIdentifier = "<RequestIdentifier>" + "ID" + "</RequestIdentifier>";
+            String credentials = "<Credentials Company=\"" + "xx" + "\" Agency=\"" + "xxxx" + "\" Password=\"" + "xxxxxxxx" + "\" />";
+            String system = "<System>" + "?" + "</System>";
+
+            Transformer transformer = TransformerFactory.newInstance().newTransformer();
+            transformer.transform(new StringSource(requestIdentifier), soapHeader.getResult());
+            transformer.transform(new StringSource(credentials), soapHeader.getResult());
+            transformer.transform(new StringSource(system), soapHeader.getResult());
+
+            bodyMarshaller.marshal(requestBody, soapMessage.getSoapBody().getPayloadResult());
+        };
+
+        try {
+            webServiceTemplate.sendAndReceive(remoteUrl, requestCallback3, responseExtractor2);
         } catch (Exception e) {
             LOGGER.error(e.getMessage());
         }
