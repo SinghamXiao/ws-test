@@ -1,21 +1,10 @@
 package com.singham.yuan.ws.test.common.xml;
 
-public class NamespacePrefixMapperImpl {
+import com.sun.xml.bind.marshaller.NamespacePrefixMapper;
 
-    private static final String[] EMPTY_STRING = new String[0];
+public class NamespacePrefixMapperImpl extends NamespacePrefixMapper {
 
-    public String[] getPreDeclaredNamespaceUris() {
-        return EMPTY_STRING;
-    }
-
-    public String[] getPreDeclaredNamespaceUris2() {
-        return EMPTY_STRING;
-    }
-
-    public String[] getContextualNamespaceDecls() {
-        return EMPTY_STRING;
-    }
-
+    @Override
     public String getPreferredPrefix(String namespaceUri, String suggestion, boolean requirePrefix) {
         if ("http://www.yuan.singham.com/head".equals(namespaceUri) && !requirePrefix)
             return "";

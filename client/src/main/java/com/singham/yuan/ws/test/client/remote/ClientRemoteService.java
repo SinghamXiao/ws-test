@@ -57,7 +57,7 @@ public class ClientRemoteService {
 
         WebServiceMessageCallback requestCallback = message -> {
             SoapMessage soapMessage = (SoapMessage) message;
-            headMarshaller.marshal(testHead, soapMessage.getSoapHeader().getResult());
+//            headMarshaller.marshal(testHead, soapMessage.getSoapHeader().getResult());
             bodyMarshaller.marshal(testBody, soapMessage.getSoapBody().getPayloadResult());
         };
 
@@ -85,59 +85,59 @@ public class ClientRemoteService {
             LOGGER.error(e.getMessage());
         }
 
-        RequestBody requestBody = RequestBodyFactory.newRequestBody();
-        WebServiceMessageCallback requestCallback2 = message -> {
-            SoapMessage soapMessage = (SoapMessage) message;
-            headMarshaller.marshal(testHead, soapMessage.getSoapHeader().getResult());
-            bodyMarshaller.marshal(requestBody, soapMessage.getSoapBody().getPayloadResult());
-        };
-
-        WebServiceMessageExtractor<ResponseBody> responseExtractor2 = message -> {
-            SoapMessage soapMessage = (SoapMessage) message;
-            if (null != soapMessage.getSoapBody().getFault()) {
-                Fault fault = (Fault) ((JAXBElement) faultMarshaller.unmarshal(soapMessage.getSoapBody().getFault().getSource())).getValue();
-                LOGGER.error(fault.getFaultstring());
-                return null;
-            }
-
-            ResponseBody rs = (ResponseBody) bodyMarshaller.unmarshal(soapMessage.getSoapBody().getPayloadSource());
-            ErrorInfo error = rs.getError();
-            if (null != error) {
-                LOGGER.error(error.getMessage());
-                return null;
-            }
-
-            return rs;
-        };
-
-        try {
-            webServiceTemplate.sendAndReceive(remoteUrl, requestCallback2, responseExtractor2);
-        } catch (Exception e) {
-            LOGGER.error(e.getMessage());
-        }
-
-
-        WebServiceMessageCallback requestCallback3 = message -> {
-            SoapMessage soapMessage = (SoapMessage) message;
-            SoapHeader soapHeader = ((SoapMessage) message).getSoapHeader();
-
-            String requestIdentifier = "<RequestIdentifier>" + "ID" + "</RequestIdentifier>";
-            String credentials = "<Credentials Company=\"" + "xx" + "\" Agency=\"" + "xxxx" + "\" Password=\"" + "xxxxxxxx" + "\" />";
-            String system = "<System>" + "?" + "</System>";
-
-            Transformer transformer = TransformerFactory.newInstance().newTransformer();
-            transformer.transform(new StringSource(requestIdentifier), soapHeader.getResult());
-            transformer.transform(new StringSource(credentials), soapHeader.getResult());
-            transformer.transform(new StringSource(system), soapHeader.getResult());
-
-            bodyMarshaller.marshal(requestBody, soapMessage.getSoapBody().getPayloadResult());
-        };
-
-        try {
-            webServiceTemplate.sendAndReceive(remoteUrl, requestCallback3, responseExtractor2);
-        } catch (Exception e) {
-            LOGGER.error(e.getMessage());
-        }
+//        RequestBody requestBody = RequestBodyFactory.newRequestBody();
+//        WebServiceMessageCallback requestCallback2 = message -> {
+//            SoapMessage soapMessage = (SoapMessage) message;
+//            headMarshaller.marshal(testHead, soapMessage.getSoapHeader().getResult());
+//            bodyMarshaller.marshal(requestBody, soapMessage.getSoapBody().getPayloadResult());
+//        };
+//
+//        WebServiceMessageExtractor<ResponseBody> responseExtractor2 = message -> {
+//            SoapMessage soapMessage = (SoapMessage) message;
+//            if (null != soapMessage.getSoapBody().getFault()) {
+//                Fault fault = (Fault) ((JAXBElement) faultMarshaller.unmarshal(soapMessage.getSoapBody().getFault().getSource())).getValue();
+//                LOGGER.error(fault.getFaultstring());
+//                return null;
+//            }
+//
+//            ResponseBody rs = (ResponseBody) bodyMarshaller.unmarshal(soapMessage.getSoapBody().getPayloadSource());
+//            ErrorInfo error = rs.getError();
+//            if (null != error) {
+//                LOGGER.error(error.getMessage());
+//                return null;
+//            }
+//
+//            return rs;
+//        };
+//
+//        try {
+//            webServiceTemplate.sendAndReceive(remoteUrl, requestCallback2, responseExtractor2);
+//        } catch (Exception e) {
+//            LOGGER.error(e.getMessage());
+//        }
+//
+//
+//        WebServiceMessageCallback requestCallback3 = message -> {
+//            SoapMessage soapMessage = (SoapMessage) message;
+//            SoapHeader soapHeader = ((SoapMessage) message).getSoapHeader();
+//
+//            String requestIdentifier = "<RequestIdentifier>" + "ID" + "</RequestIdentifier>";
+//            String credentials = "<Credentials Company=\"" + "xx" + "\" Agency=\"" + "xxxx" + "\" Password=\"" + "xxxxxxxx" + "\" />";
+//            String system = "<System>" + "?" + "</System>";
+//
+//            Transformer transformer = TransformerFactory.newInstance().newTransformer();
+//            transformer.transform(new StringSource(requestIdentifier), soapHeader.getResult());
+//            transformer.transform(new StringSource(credentials), soapHeader.getResult());
+//            transformer.transform(new StringSource(system), soapHeader.getResult());
+//
+//            bodyMarshaller.marshal(requestBody, soapMessage.getSoapBody().getPayloadResult());
+//        };
+//
+//        try {
+//            webServiceTemplate.sendAndReceive(remoteUrl, requestCallback3, responseExtractor2);
+//        } catch (Exception e) {
+//            LOGGER.error(e.getMessage());
+//        }
     }
 
 }

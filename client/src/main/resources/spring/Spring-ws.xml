@@ -24,13 +24,10 @@
         <property name="contextPath" value="com.singham.yuan.body"/>
         <property name="marshallerProperties">
             <map>
-                <entry key="jaxb.fragment">
-                    <value type="java.lang.Boolean">true</value>
-                </entry>
                 <entry key="jaxb.formatted.output">
                     <value type="java.lang.Boolean">true</value>
                 </entry>
-                <entry key="com.sun.xml.bind.namespacePrefixMapper" value-ref="clientNamespacePrefixMapperImpl"/>
+                <!--<entry key="com.sun.xml.bind.namespacePrefixMapper" value-ref="clientNamespacePrefixMapperImpl"/>-->
             </map>
         </property>
     </bean>
