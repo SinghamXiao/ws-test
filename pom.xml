@@ -231,6 +231,11 @@
             <scope>provided</scope>
         </dependency>
 
+        <dependency>
+            <groupId>com.sun.xml.messaging.saaj</groupId>
+            <artifactId>saaj-impl</artifactId>
+            <version>1.4.0</version>
+        </dependency>
 
     </dependencies>
 

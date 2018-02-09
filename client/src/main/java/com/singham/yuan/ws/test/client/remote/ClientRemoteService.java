@@ -1,9 +1,8 @@
 package com.singham.yuan.ws.test.client.remote;
 
 import com.singham.yuan.body.Error;
-import com.singham.yuan.body.*;
+import com.singham.yuan.body.TestBody;
 import com.singham.yuan.head.TestHead;
-import com.singham.yuan.ws.test.common.factory.RequestBodyFactory;
 import com.singham.yuan.ws.test.common.factory.TestBodyFactory;
 import com.singham.yuan.ws.test.common.factory.TestHeadFactory;
 import org.slf4j.Logger;
@@ -16,14 +15,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.ws.client.core.WebServiceMessageCallback;
 import org.springframework.ws.client.core.WebServiceMessageExtractor;
 import org.springframework.ws.client.core.WebServiceTemplate;
-import org.springframework.ws.soap.SoapHeader;
 import org.springframework.ws.soap.SoapMessage;
-import org.springframework.xml.transform.StringSource;
 import org.xmlsoap.schemas.soap.envelope.Fault;
 
 import javax.xml.bind.JAXBElement;
-import javax.xml.transform.Transformer;
-import javax.xml.transform.TransformerFactory;
 
 @Service
 public class ClientRemoteService {
@@ -78,6 +73,7 @@ public class ClientRemoteService {
 
             return rs;
         };
+
 
         try {
             webServiceTemplate.sendAndReceive(remoteUrl, requestCallback, responseExtractor);

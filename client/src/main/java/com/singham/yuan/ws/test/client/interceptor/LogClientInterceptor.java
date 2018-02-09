@@ -35,6 +35,8 @@ public class LogClientInterceptor implements ClientInterceptor {
 
     @Override
     public boolean handleFault(MessageContext messageContext) throws WebServiceClientException {
+        String message = transformMessageService.getMessageContent(messageContext.getResponse());
+        LOGGER.info("Client-Response: " + message);
         return true;
     }
 
@@ -42,6 +44,5 @@ public class LogClientInterceptor implements ClientInterceptor {
     public void afterCompletion(MessageContext messageContext, Exception ex) throws WebServiceClientException {
 
     }
-
 
 }
