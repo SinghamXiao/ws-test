@@ -1,6 +1,5 @@
 package com.singham.yuan.ws.test.client;
 
-import com.sun.xml.messaging.saaj.soap.MessageImpl;
 import org.junit.Test;
 import org.springframework.ws.soap.saaj.SaajSoapMessage;
 import org.springframework.xml.transform.TransformerObjectSupport;
@@ -8,7 +7,6 @@ import org.springframework.xml.transform.TransformerObjectSupport;
 import javax.xml.soap.MessageFactory;
 import javax.xml.soap.SOAPConstants;
 import javax.xml.soap.SOAPMessage;
-import java.lang.reflect.Field;
 
 public class WSTestClientTest extends TransformerObjectSupport {
 

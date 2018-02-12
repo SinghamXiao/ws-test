@@ -27,7 +27,7 @@ public class LogEndPointInterceptor implements EndpointInterceptor {
 
     @Override
     public boolean handleResponse(MessageContext messageContext, Object endpoint) throws Exception {
-        String message = transformMessageService.getMessageContent(messageContext.getResponse());
+        String message = transformMessageService.getMessageContent2(messageContext.getResponse());
         LOGGER.info("Server-Response: " + message);
         return true;
     }

@@ -9,7 +9,9 @@ import org.springframework.ws.server.endpoint.annotation.PayloadRoot;
 import org.springframework.ws.server.endpoint.annotation.RequestPayload;
 import org.springframework.ws.server.endpoint.annotation.ResponsePayload;
 
-@Endpoint
+import javax.xml.ws.soap.SOAPBinding;
+
+@Endpoint(value = SOAPBinding.SOAP12HTTP_BINDING)
 public class ServerEndpoint {
 
     private static final String NAMESPACE_URI = "http://www.yuan.singham.com/body";

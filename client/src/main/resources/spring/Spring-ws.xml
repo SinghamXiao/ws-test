@@ -1,7 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+       xmlns:util="http://www.springframework.org/schema/util"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://www.springframework.org/schema/util
+       http://www.springframework.org/schema/util/spring-util.xsd">
 
     <bean id="clientNamespacePrefixMapperImpl" class="com.singham.yuan.ws.test.common.xml.NamespacePrefixMapperImpl"/>
 
@@ -37,9 +41,19 @@
 
     <bean id="clientTransformMessageService" class="com.singham.yuan.ws.test.common.service.TransformMessageService"/>
 
+    <bean id="soap12MessageFactory" class="org.springframework.ws.soap.saaj.SaajSoapMessageFactory">
+        <property name="soapVersion">
+            <util:constant static-field="org.springframework.ws.soap.SoapVersion.SOAP_12"/>
+        </property>
+    </bean>
+
     <bean id="webServiceTemplate" class="org.springframework.ws.client.core.WebServiceTemplate">
+        <constructor-arg ref="soap12MessageFactory"/>
         <property name="marshaller" ref="clientBodyMarshaller"/>
         <property name="unmarshaller" ref="clientBodyMarshaller"/>
+        <property name="messageSender">
+            <bean class="com.singham.yuan.ws.test.client.http.EnhanceHttpUrlConnectionMessageSender"/>
+        </property>
         <property name="interceptors">
             <list>
                 <ref bean="logClientInterceptor"/>

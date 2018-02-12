@@ -7,6 +7,8 @@ import org.springframework.xml.transform.TransformerObjectSupport;
 
 import javax.xml.transform.Source;
 import javax.xml.transform.stream.StreamResult;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.io.StringWriter;
 
 public class TransformMessageService extends TransformerObjectSupport {
@@ -32,6 +34,12 @@ public class TransformMessageService extends TransformerObjectSupport {
             return soapMessage.getEnvelope().getSource();
         }
         return null;
+    }
+
+    public String getMessageContent2(WebServiceMessage webServiceMessage) throws IOException {
+        ByteArrayOutputStream messageStream = new ByteArrayOutputStream();
+        webServiceMessage.writeTo(messageStream);
+        return messageStream.toString("UTF-8");
     }
 
 }

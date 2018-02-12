@@ -1,10 +1,11 @@
 <beans xmlns="http://www.springframework.org/schema/beans"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xmlns:sws="http://www.springframework.org/schema/web-services"
+       xmlns:util="http://www.springframework.org/schema/util"
        xsi:schemaLocation="http://www.springframework.org/schema/beans
       http://www.springframework.org/schema/beans/spring-beans-3.1.xsd
       http://www.springframework.org/schema/web-services
-      http://www.springframework.org/schema/web-services/web-services-2.0.xsd">
+      http://www.springframework.org/schema/web-services/web-services-2.0.xsd http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd">
 
     <sws:annotation-driven/>
 
@@ -45,5 +46,17 @@
         <ref bean="logEndPointInterceptor"/>
         <ref bean="handleEndPointInterceptor"/>
     </sws:interceptors>
+
+    <bean id="messageFactory" class="org.springframework.ws.soap.saaj.SaajSoapMessageFactory">
+        <description>A message factory to support SOAP 1.2</description>
+        <property name="soapVersion">
+            <util:constant static-field="org.springframework.ws.soap.SoapVersion.SOAP_12"/>
+        </property>
+        <property name="messageProperties">
+            <map>
+                <entry key="javax.xml.soap.write-xml-declaration" value="true"/>
+            </map>
+        </property>
+    </bean>
 
 </beans>
