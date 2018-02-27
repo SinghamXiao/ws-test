@@ -41,14 +41,16 @@
 
     <bean id="clientTransformMessageService" class="com.singham.yuan.ws.test.common.service.TransformMessageService"/>
 
-    <bean id="soap12MessageFactory" class="org.springframework.ws.soap.saaj.SaajSoapMessageFactory">
-        <property name="soapVersion">
-            <util:constant static-field="org.springframework.ws.soap.SoapVersion.SOAP_12"/>
+    <bean id="messageFactory" class="org.springframework.ws.soap.saaj.SaajSoapMessageFactory">
+        <property name="messageProperties">
+            <map>
+                <entry key="javax.xml.soap.write-xml-declaration" value="true"/>
+            </map>
         </property>
     </bean>
 
     <bean id="webServiceTemplate" class="org.springframework.ws.client.core.WebServiceTemplate">
-        <constructor-arg ref="soap12MessageFactory"/>
+        <constructor-arg ref="messageFactory"/>
         <property name="marshaller" ref="clientBodyMarshaller"/>
         <property name="unmarshaller" ref="clientBodyMarshaller"/>
         <property name="messageSender">

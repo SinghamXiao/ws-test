@@ -28,7 +28,7 @@ public class LogClientInterceptor implements ClientInterceptor {
 
     @Override
     public boolean handleResponse(MessageContext messageContext) throws WebServiceClientException {
-        String message = transformMessageService.getMessageContent(messageContext.getResponse());
+        String message = transformMessageService.getMessageContent2(messageContext.getResponse());
         LOGGER.info("Client-Response: " + message);
         return true;
     }
