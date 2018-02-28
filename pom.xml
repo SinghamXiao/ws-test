@@ -18,8 +18,8 @@
     </modules>
 
     <properties>
-        <spring.version>4.3.10.RELEASE</spring.version>
-        <spring.ws.version>2.4.0.RELEASE</spring.ws.version>
+        <spring.version>4.3.14.RELEASE</spring.version>
+        <spring.ws.version>3.0.0.RELEASE</spring.ws.version>
     </properties>
 
     <build>
