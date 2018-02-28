@@ -18,7 +18,7 @@
     </modules>
 
     <properties>
-        <spring.version>4.3.14.RELEASE</spring.version>
+        <spring.version>5.0.4.RELEASE</spring.version>
         <spring.ws.version>3.0.0.RELEASE</spring.ws.version>
     </properties>
 
