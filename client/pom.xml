@@ -55,7 +55,7 @@
                     <scanIntervalSeconds>0</scanIntervalSeconds>
 
                     <webAppConfig>
-                        <contextPath>/wstest-client</contextPath>
+                        <contextPath>/${artifactId}</contextPath>
                     </webAppConfig>
                     <httpConnector>
                         <port>8181</port>
