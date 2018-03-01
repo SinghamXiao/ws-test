@@ -42,6 +42,9 @@
     <bean id="clientTransformMessageService" class="com.singham.yuan.ws.test.common.service.TransformMessageService"/>
 
     <bean id="messageFactory" class="org.springframework.ws.soap.saaj.SaajSoapMessageFactory">
+        <property name="soapVersion">
+            <util:constant static-field="org.springframework.ws.soap.SoapVersion.SOAP_12"/>
+        </property>
         <property name="messageProperties">
             <map>
                 <entry key="javax.xml.soap.write-xml-declaration" value="true"/>

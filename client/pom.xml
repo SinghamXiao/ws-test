@@ -58,7 +58,7 @@
                         <contextPath>/${artifactId}</contextPath>
                     </webAppConfig>
                     <httpConnector>
-                        <port>8181</port>
+                        <port>8281</port>
                     </httpConnector>
                 </configuration>
             </plugin>
