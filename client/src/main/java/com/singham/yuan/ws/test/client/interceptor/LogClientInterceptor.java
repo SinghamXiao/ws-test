@@ -10,33 +10,47 @@ import org.springframework.ws.client.WebServiceClientException;
 import org.springframework.ws.client.support.interceptor.ClientInterceptor;
 import org.springframework.ws.context.MessageContext;
 
+import java.util.concurrent.ThreadPoolExecutor;
+
 @Component
 public class LogClientInterceptor implements ClientInterceptor {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(LogClientInterceptor.class);
 
+    private static final Logger HTTP_LOGGER = LoggerFactory.getLogger("HTTP_LOGGER");
+
     @Autowired
     @Qualifier("clientTransformMessageService")
     private TransformMessageService transformMessageService;
 
+    @Autowired
+    @Qualifier("streamLogRecorderExecutor")
+    private ThreadPoolExecutor streamLogRecorderExecutor;
+
     @Override
     public boolean handleRequest(MessageContext messageContext) throws WebServiceClientException {
         String message = transformMessageService.getMessageContent(messageContext.getRequest());
-        LOGGER.info("Client-Request: " + message);
+        String info = "Client-Request: " + message;
+        LOGGER.info(info);
+        streamLogRecorderExecutor.execute(() -> HTTP_LOGGER.info(info));
         return true;
     }
 
     @Override
     public boolean handleResponse(MessageContext messageContext) throws WebServiceClientException {
         String message = transformMessageService.getMessageContent2(messageContext.getResponse());
-        LOGGER.info("Client-Response: " + message);
+        String info = "Client-Response: " + message;
+        LOGGER.info(info);
+        streamLogRecorderExecutor.execute(() -> HTTP_LOGGER.info(info));
         return true;
     }
 
     @Override
     public boolean handleFault(MessageContext messageContext) throws WebServiceClientException {
         String message = transformMessageService.getMessageContent(messageContext.getResponse());
-        LOGGER.info("Client-Response: " + message);
+        String info = "Client-Response: " + message;
+        LOGGER.info(info);
+        streamLogRecorderExecutor.execute(() -> HTTP_LOGGER.info(info));
         return true;
     }
 
