@@ -3,6 +3,8 @@ package com.singham.yuan.ws.test.client.remote;
 import com.singham.yuan.body.Error;
 import com.singham.yuan.body.TestBody;
 import com.singham.yuan.head.TestHead;
+import com.singham.yuan.ws.test.client.model.db.User;
+import com.singham.yuan.ws.test.client.repository.UserRepository;
 import com.singham.yuan.ws.test.common.factory.TestBodyFactory;
 import com.singham.yuan.ws.test.common.factory.TestHeadFactory;
 import org.slf4j.Logger;
@@ -44,6 +46,9 @@ public class ClientRemoteService {
     @Qualifier("clientFaultMarshaller")
     private Jaxb2Marshaller faultMarshaller;
 
+    @Autowired
+    private UserRepository userRepository;
+
     public void execute() {
 
         TestHead testHead = TestHeadFactory.newTestHead();
@@ -76,6 +81,7 @@ public class ClientRemoteService {
 
 
         try {
+            userRepository.save(new User("Lucy"));
             webServiceTemplate.sendAndReceive(remoteUrl, requestCallback, responseExtractor);
         } catch (Exception e) {
             LOGGER.error(e.getMessage());
@@ -108,7 +114,7 @@ public class ClientRemoteService {
 //
 //        try {
 //            webServiceTemplate.sendAndReceive(remoteUrl, requestCallback2, responseExtractor2);
-//        } catch (Exception e) {
+//        } catch (exception e) {
 //            LOGGER.error(e.getMessage());
 //        }
 //
@@ -131,7 +137,7 @@ public class ClientRemoteService {
 //
 //        try {
 //            webServiceTemplate.sendAndReceive(remoteUrl, requestCallback3, responseExtractor2);
-//        } catch (Exception e) {
+//        } catch (exception e) {
 //            LOGGER.error(e.getMessage());
 //        }
     }

@@ -23,7 +23,7 @@ public class TransformMessageService extends TransformerObjectSupport {
             new TransformerHelper().transform(source, new StreamResult(writer));
             return writer.toString();
         } catch (Exception e) {
-            return String.format("Exception Name:%s Cause:%s Message:%s)", e.getClass().getName(), e.getCause(), e.getMessage());
+            return String.format("exception Name:%s Cause:%s Message:%s)", e.getClass().getName(), e.getCause(), e.getMessage());
         }
     }
 
@@ -41,7 +41,7 @@ public class TransformMessageService extends TransformerObjectSupport {
             webServiceMessage.writeTo(messageStream);
             return messageStream.toString("UTF-8");
         } catch (Exception e) {
-            return String.format("Exception Name:%s Cause:%s Message:%s)", e.getClass().getName(), e.getCause(), e.getMessage());
+            return String.format("exception Name:%s Cause:%s Message:%s)", e.getClass().getName(), e.getCause(), e.getMessage());
         }
     }
 
