@@ -37,9 +37,6 @@
 
         <testResources>
             <testResource>
-                <directory>src/test/java</directory>
-            </testResource>
-            <testResource>
                 <directory>src/test/resources</directory>
             </testResource>
         </testResources>
