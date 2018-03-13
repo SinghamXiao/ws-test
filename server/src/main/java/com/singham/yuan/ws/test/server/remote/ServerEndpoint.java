@@ -4,6 +4,9 @@ import com.singham.yuan.body.RequestBody;
 import com.singham.yuan.body.ResponseBody;
 import com.singham.yuan.body.TestBody;
 import com.singham.yuan.ws.test.common.factory.ResponseBodyFactory;
+import com.singham.yuan.ws.test.server.model.Student;
+import com.singham.yuan.ws.test.server.repository.StudentRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ws.server.endpoint.annotation.Endpoint;
 import org.springframework.ws.server.endpoint.annotation.PayloadRoot;
 import org.springframework.ws.server.endpoint.annotation.RequestPayload;
@@ -16,9 +19,13 @@ public class ServerEndpoint {
 
     private static final String NAMESPACE_URI = "http://www.yuan.singham.com/body";
 
+    @Autowired
+    private StudentRepository studentRepository;
+
     @PayloadRoot(namespace = NAMESPACE_URI, localPart = "TestBody")
     @ResponsePayload
     public TestBody execute(@RequestPayload TestBody request) {
+        studentRepository.save(new Student(1L, "Lucy"));
         return request;
     }
 

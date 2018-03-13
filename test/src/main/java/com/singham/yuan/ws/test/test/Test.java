@@ -11,6 +11,9 @@ public class Test {
         System.out.println(loader);
         System.out.println(loader.getParent());
         System.out.println(loader.getParent().getParent());
+
+        StackTraceElement[] stackTrace = new RuntimeException().getStackTrace();
+        System.out.println();
     }
 
 

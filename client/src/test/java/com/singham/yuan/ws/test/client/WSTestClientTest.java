@@ -7,6 +7,7 @@ import org.springframework.xml.transform.TransformerObjectSupport;
 import javax.xml.soap.MessageFactory;
 import javax.xml.soap.SOAPConstants;
 import javax.xml.soap.SOAPMessage;
+import java.math.BigDecimal;
 
 public class WSTestClientTest extends TransformerObjectSupport {
 
@@ -23,6 +24,12 @@ public class WSTestClientTest extends TransformerObjectSupport {
             System.out.println();
             System.out.println();
             System.out.println();
+
+            System.out.println(-12345678.0);
+            System.out.println(12345678.0);
+            //整数位为0,当小数位以0开始连续出现大于等于3时开始以科学计数法显示
+            System.out.println(0.0001);
+            System.out.println(-0.0001);
         } catch (Exception e) {
             e.printStackTrace();
         }
