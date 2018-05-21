@@ -14,9 +14,9 @@ import java.util.Map;
 
 public class TestBuilder<T> {
 
-    private final IMocksControl mocksControl;
+    private IMocksControl mocksControl;
 
-    private final T target;
+    private T target;
 
     public TestBuilder(T target) {
         this.mocksControl = EasyMock.createControl();
@@ -28,129 +28,150 @@ public class TestBuilder<T> {
         this.mocksControl = EasyMock.createControl(mockType);
     }
 
-    public TestBuilder(Class<T> targetClass, Object... args) throws IllegalAccessException, InstantiationException {
+    public TestBuilder(Class<T> targetClass, Object... args) {
         this(targetClass, MockType.DEFAULT, args);
     }
 
-    public TestBuilder(Class<T> targetClass, MockType mockType, Object... args) throws IllegalAccessException, InstantiationException {
-        this.mocksControl = EasyMock.createControl(mockType);
+    public TestBuilder(Class<T> targetClass, MockType mockType, Object... args) {
+        try {
+            this.mocksControl = EasyMock.createControl(mockType);
+            if (args != null && args.length != 0) {
+                T tmp = null;
+                Constructor[] var5 = targetClass.getConstructors();
+                for (Constructor constructor : var5) {
+                    try {
+                        tmp = (T) constructor.newInstance(args);
+                    } catch (IllegalArgumentException | InvocationTargetException var10) {
+                    }
+                }
 
-        if (args == null || args.length == 0) {
-            this.target = targetClass.newInstance();
-            return;
-        }
-        T tmp = null;
-        for (Constructor<?> constructor : targetClass.getConstructors()) {
-            try {
-                tmp = (T) constructor.newInstance(args);
-            } catch (InvocationTargetException | IllegalArgumentException e) {
-                continue;
+                if (tmp == null) {
+                    throw new InstantiationException("Constructor not found with " + args.length + " args.");
+                } else {
+                    this.target = tmp;
+                }
+            } else {
+                this.target = targetClass.newInstance();
             }
+        } catch (Exception var11) {
+            throw new RuntimeException(var11);
         }
-        if (tmp == null) {
-            throw new InstantiationException("Constructor not found with " + args.length + " args.");
-        }
-        this.target = tmp;
     }
 
     public <M> TestBuilder<T> withMock(Class<M> mockComponentClass, MockRecorder<M> mockRecorder) {
-        M mocker = mocksControl.createMock(mockComponentClass);
+        M mocker = this.mocksControl.createMock(mockComponentClass);
         mockRecorder.record(mocker);
+
         try {
-            Field field = findFieldByClass(target.getClass(), mockComponentClass);
+            Field field = this.findFieldByClass(this.target.getClass(), mockComponentClass);
             field.setAccessible(true);
             setField(mocker, field);
-        } catch (Exception e) {
+
+            return this;
+        } catch (Exception var5) {
             throw new IllegalArgumentException("Can not find field for class: " + mockComponentClass.getName());
         }
-        return this;
-    }
-
-    public <M> TestBuilder<T> withMock(Class<M> mockComponentClass, String fieldName, MockRecorder<M> mockRecorder) {
-        M mocker = mocksControl.createMock(mockComponentClass);
-        mockRecorder.record(mocker);
-        try {
-            Field field = findFieldByName(target.getClass(), fieldName);
-            field.setAccessible(true);
-            setField(mocker, field);
-        } catch (Exception e) {
-            throw new IllegalArgumentException("Invalid field name: " + fieldName);
-        }
-        return this;
-    }
-
-    public <M> TestBuilder<T> withMock(Class<M> mockComponentClass, String fieldName, String mapKey, MockRecorder<M> mockRecorder) {
-        M mocker = mocksControl.createMock(mockComponentClass);
-        mockRecorder.record(mocker);
-        try {
-            Field field = findFieldByName(target.getClass(), fieldName);
-            field.setAccessible(true);
-            if (!field.getGenericType().getTypeName().startsWith(Map.class.getName())) {
-                throw new IllegalArgumentException("Field must be a Map: " + fieldName);
-            }
-            if (field.get(target) == null) {
-                field.set(target, new LinkedHashMap<>());
-            }
-            ((Map) field.get(target)).put(mapKey, mocker);
-        } catch (Exception e) {
-            throw new IllegalArgumentException("Invalid field name: " + fieldName);
-        }
-        return this;
-    }
-
-    public <V> TestBuilder<T> withField(String fieldName, V value) {
-        try {
-            Field field = findFieldByName(target.getClass(), fieldName);
-            field.setAccessible(true);
-            field.set(target, value);
-        } catch (Exception e) {
-            throw new IllegalArgumentException("Invalid field name: " + fieldName);
-        }
-        return this;
-    }
-
-    public T build() {
-        mocksControl.replay();
-        return target;
-    }
-
-    public void verifyMocks() {
-        mocksControl.verify();
     }
 
     private <M> void setField(M mocker, Field field) throws IllegalAccessException {
         if (field.getGenericType().getTypeName().startsWith(List.class.getName())) {
-            if (field.get(target) == null) {
-                field.set(target, new ArrayList<>());
+            if (field.get(this.target) == null) {
+                field.set(this.target, new ArrayList());
             }
-            ((List) field.get(target)).add(mocker);
+
+            ((List) field.get(this.target)).add(mocker);
         } else {
-            field.set(target, mocker);
+            field.set(this.target, mocker);
         }
     }
 
+    public <M> TestBuilder<T> withMock(Class<M> mockComponentClass, String fieldName, MockRecorder<M> mockRecorder) {
+        M mocker = this.mocksControl.createMock(mockComponentClass);
+        mockRecorder.record(mocker);
+
+        try {
+            Field field = this.findFieldByName(this.target.getClass(), fieldName);
+            field.setAccessible(true);
+            setField((M) mocker, field);
+
+            return this;
+        } catch (Exception var6) {
+            throw new IllegalArgumentException("Invalid field name: " + fieldName);
+        }
+    }
+
+    public <M> TestBuilder<T> withMock(Class<M> mockComponentClass, String fieldName, String mapKey, MockRecorder<M> mockRecorder) {
+        M mocker = this.mocksControl.createMock(mockComponentClass);
+        mockRecorder.record(mocker);
+
+        try {
+            Field field = this.findFieldByName(this.target.getClass(), fieldName);
+            field.setAccessible(true);
+            if (!field.getGenericType().getTypeName().startsWith(Map.class.getName())) {
+                throw new IllegalArgumentException("Field must be a Map: " + fieldName);
+            } else {
+                if (field.get(this.target) == null) {
+                    field.set(this.target, new LinkedHashMap());
+                }
+
+                ((Map) field.get(this.target)).put(mapKey, mocker);
+                return this;
+            }
+        } catch (Exception var7) {
+            throw new IllegalArgumentException("Invalid field name: " + fieldName);
+        }
+    }
+
+    public <V> TestBuilder<T> withField(String fieldName, V value) {
+        try {
+            Field field = this.findFieldByName(this.target.getClass(), fieldName);
+            field.setAccessible(true);
+            field.set(this.target, value);
+            return this;
+        } catch (Exception var4) {
+            throw new IllegalArgumentException("Invalid field name: " + fieldName);
+        }
+    }
+
+    public T build() {
+        this.mocksControl.replay();
+        return this.target;
+    }
+
+    public void verifyMocks() {
+        this.mocksControl.verify();
+    }
+
     private <M> Field findFieldByClass(Class clazz, Class<M> mockComponentClass) {
-        for (Field field : clazz.getDeclaredFields()) {
+        Field[] var3 = clazz.getDeclaredFields();
+
+        for (Field field : var3) {
             if (field.getGenericType().getTypeName().contains(mockComponentClass.getName())) {
                 return field;
             }
         }
+
         if (clazz.getSuperclass() != null) {
-            return findFieldByClass(clazz.getSuperclass(), mockComponentClass);
+            return this.findFieldByClass(clazz.getSuperclass(), mockComponentClass);
+        } else {
+            throw new IllegalArgumentException();
         }
-        throw new IllegalArgumentException();
     }
 
     private Field findFieldByName(Class clazz, String fieldName) {
-        for (Field field : clazz.getDeclaredFields()) {
+        Field[] var3 = clazz.getDeclaredFields();
+
+        for (Field field : var3) {
             if (field.getName().equals(fieldName)) {
                 return field;
             }
         }
+
         if (clazz.getSuperclass() != null) {
-            return findFieldByName(clazz.getSuperclass(), fieldName);
+            return this.findFieldByName(clazz.getSuperclass(), fieldName);
+        } else {
+            throw new IllegalArgumentException();
         }
-        throw new IllegalArgumentException();
     }
 
 }
