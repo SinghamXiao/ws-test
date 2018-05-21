@@ -5,15 +5,14 @@ import java.lang.reflect.InvocationTargetException;
 
 public class PrivateConstructorsTestSupport {
 
-    public static void testPrivateConstructors(Constructor<?>[] constructors) {
-        for (Constructor<?> constructor : constructors) {
-            try {
-                System.out.println(constructor.getName());
-                constructor.setAccessible(true);
-                constructor.newInstance();
-            } catch (IllegalAccessException | InstantiationException | InvocationTargetException e) {
-                System.out.println(e.toString());
-            }
+    public static void testPrivateConstructor(Class<?> aClass) {
+        try {
+            Constructor<?> constructor = aClass.getDeclaredConstructor();
+            System.out.println(constructor.getName());
+            constructor.setAccessible(true);
+            constructor.newInstance();
+        } catch (NoSuchMethodException | InvocationTargetException | IllegalAccessException | InstantiationException e) {
+            System.out.println(e.toString());
         }
     }
 
