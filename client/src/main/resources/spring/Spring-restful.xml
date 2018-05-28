@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <bean id="visibility" class="com.fasterxml.jackson.databind.introspect.VisibilityChecker.Std">
+        <constructor-arg index="0" value="NONE"/>
+        <constructor-arg index="1" value="NONE"/>
+        <constructor-arg index="2" value="NONE"/>
+        <constructor-arg index="3" value="NONE"/>
+        <constructor-arg index="4" value="ANY"/>
+    </bean>
+
+    <bean id="objectMapper" class="com.fasterxml.jackson.databind.ObjectMapper">
+        <property name="serializationInclusion" value="NON_NULL"/>
+        <property name="visibility" ref="visibility"/>
+    </bean>
+
+    <bean id="restTemplate" class="org.springframework.web.client.RestTemplate">
+        <property name="messageConverters">
+            <list value-type="org.springframework.http.converter.HttpMessageConverter">
+                <bean class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter">
+                    <property name="supportedMediaTypes" value="application/json"/>
+                    <property name="objectMapper" ref="objectMapper"/>
+                </bean>
+            </list>
+        </property>
+        <property name="requestFactory">
+            <bean class="org.springframework.http.client.SimpleClientHttpRequestFactory">
+                <property name="connectTimeout" value="${availability.connection.timeout}"/>
+                <property name="readTimeout" value="${availability.read.timeout}"/>
+            </bean>
+        </property>
+    </bean>
+
+</beans>
